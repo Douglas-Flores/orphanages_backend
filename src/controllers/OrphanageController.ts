@@ -5,14 +5,14 @@ import orphanageView from '../views/orphanages_view';
 import * as Yup from 'yup';
 
 export default {
-   async index (request: Request, response: Response) {
-       const orphanagesRepository = getRepository(Orphanage);
-       const orphanages = await orphanagesRepository.find({
-           relations: ['images']
-       });
+    async index (request: Request, response: Response) {
+        const orphanagesRepository = getRepository(Orphanage);
+        const orphanages = await orphanagesRepository.find({
+            relations: ['images']
+        });
 
-       return response.json(orphanageView.renderMany(orphanages));
-   },
+        return response.json(orphanageView.renderMany(orphanages));
+    },
 
     async show (request: Request, response: Response) {
         const { id } = request.params;
@@ -51,8 +51,8 @@ export default {
             about,
             instructions,
             opening_hours,
-            open_on_weekends,
-            images,
+            open_on_weekends: open_on_weekends === 'true',
+            images
         }
 
         const schema = Yup.object().shape({
